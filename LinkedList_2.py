@@ -41,7 +41,7 @@ class LinkedList:
             node = node.next
         return find_list # здесь будет ваш код
 
-    def delete(self, val, all):
+    def delete(self, val, all=False):
         node = self.head
         if node == None: #Отрабатывает пустой список
             return
@@ -109,13 +109,13 @@ class LinkedList:
             node.next = second_node
         return
 
-    # def LinkedList_in_List(self):
-    #     node = self.head
-    #     my_list = []
-    #     while node is not None:
-    #         my_list += [node.value]
-    #         node = node.next
-    #     return my_list
+    def LinkedList_in_List(self):
+        node = self.head
+        my_list = []
+        while node is not None:
+            my_list += [node.value]
+            node = node.next
+        return my_list
 # s_list = LinkedList()
 # s_list.add_in_tail(Node(125))
 # # s_list.add_in_tail(Node(128))
