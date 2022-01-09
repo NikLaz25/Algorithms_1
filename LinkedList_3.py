@@ -105,7 +105,7 @@ class LinkedList:
     def insert(self, afterNode, newNode):
         node = self.head
         new_node = Node(newNode)
-        if afterNode is not None:
+        if afterNode is not None:  # вставка после определенного значения
             while node is not None:
                 last_node = node
                 node = node.next
@@ -118,12 +118,18 @@ class LinkedList:
                     last_node.next = new_node
                     self.tail = new_node
                     return
-        else:
+        elif afterNode is None and self.head is not None:  # вставка в начало, в непустой список
             second_node = self.head
             self.head = new_node
             node = new_node
             node.next = second_node
-        return
+
+        elif afterNode is None and self.head is None:  # вставка в начало, в пустой список
+            second_node = self.head
+            self.head = new_node
+            self.tail = new_node
+            node = new_node
+            node.next = second_node
 
     def LinkedList_in_List(self):
         '''Вспомогательный метод для тестирования. Выводит значения связанного списка в обычный список'''
@@ -133,3 +139,4 @@ class LinkedList:
             my_list += [node.value]
             node = node.next
         return my_list
+
