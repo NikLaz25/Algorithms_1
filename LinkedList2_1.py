@@ -61,12 +61,13 @@ class LinkedList2:
 
     def delete(self, val, all=False):
         '''Удалить значение'''
+        '''Удалить значение'''
+        if self.head is None:  # Отрабатывает пустой список
+            return None
+        # параметры задаются после отработки пустого списка, т.к. иначе будет ошибка
         last_node = None
         node = self.head
         next_node = node.next
-
-        if self.head is None:  # Отрабатывает пустой список
-            return None
 
         if self.head == self.tail:  # если в списке только один узел
             self.head = None
