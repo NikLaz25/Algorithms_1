@@ -90,8 +90,12 @@ class DynArray:
         self.count -= 1
 
         '''Уменьшение ёмкости, при необходимости'''
-        if self.capacity / 2 >= self.count and self.capacity > 16:
-            self.resize(int(self.capacity / 2))
+        if self.count/self.capacity < 0.5 and self.capacity/1.5 > 16:
+            self.resize(int(self.capacity/1.5))
+        elif self.capacity == 16:
+            pass
+        elif self.count/self.capacity < 0.5 and self.capacity/1.5 <= 16:
+            self.resize(16)
 
         return None
 
