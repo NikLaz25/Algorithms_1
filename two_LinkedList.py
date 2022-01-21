@@ -3,31 +3,31 @@ from typing import Optional
 
 class Node:
 
-    def __init__(self, v: int) -> None:
+    def __init__(self, v: int):
         self.value = v
         self.next = None
 
 
 class LinkedList:
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.head: Optional[Node] = None
         self.tail: Optional[Node] = None
 
-    def add_in_tail(self, item: Optional[Node]) -> None:
+    def add_in_tail(self, item: Optional[Node]):
         if self.head is None and self.tail is None:
             self.head = item
         else:
             self.tail.next = item
         self.tail = item
-        return None
+        return
 
-    def print_all_nodes(self) -> None:
+    def print_all_nodes(self):
         node = self.head
         while node != None:
             print(node.value)
             node = node.next
-        return None
+        return
     def len(self) -> int:
         node: Optional[Node] = self.head
         counter: int = 0
@@ -38,26 +38,26 @@ class LinkedList:
 
 
 
-def two_LinkedList(a_list: LinkedList, b_list: LinkedList) -> Optional[LinkedList]:
+def two_LinkedList(a_list: LinkedList, b_list: LinkedList) -> LinkedList:
     '''метод который получает на вход два связанных списка,
     состоящие из целых значений, и если их длины равны,
     возвращает список, каждый элемент которого равен
     сумме соответствующих элементов входных списков'''
-    node_a: Optional[Node] = a_list.head
-    node_b: Optional[Node] = b_list.head
+    # node_a: Optional[Node] = a_list.head
+    # node_b: Optional[Node] = b_list.head
+    node_a: Node = a_list.head
+    node_b: Node = b_list.head
     s_list: LinkedList = LinkedList()
-    node_last: Optional[Node] = None
     if a_list.len() != b_list.len():
-        return None
+        return
+
     while node_a is not None:
-        node: Optional[Node]  = s_list.add_in_tail(Node(node_a.value + node_b.value))
-        if node_last is not None:
-            node_last.next = node
-        node_last = node
+        node = s_list.add_in_tail(Node(node_a.value + node_b.value))
         node_a = node_a.next
         node_b = node_b.next
 
-    return s_list.print_all_nodes()
+    return s_list
+
 
 # a_list = LinkedList()
 # a_list.add_in_tail(Node(12))
@@ -71,6 +71,8 @@ def two_LinkedList(a_list: LinkedList, b_list: LinkedList) -> Optional[LinkedLis
 # b_list.add_in_tail(Node(125))
 # b_list.add_in_tail(Node(128))
 #
-#
-# two_LinkedList(a_list, b_list)
+# s_list = two_LinkedList(a_list, b_list)
+# s_list.print_all_nodes()
+
+
 
