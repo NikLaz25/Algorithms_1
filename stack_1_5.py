@@ -43,21 +43,21 @@ class Stack:
 
 
 
-def balance(my_str: str) -> bool:
-    stack = Stack()
-    count = 0
-    for i in range(len(my_str)):
-        stack.push(my_str[i])
-    for i in range(len(stack.stack)):
-        if  stack.peek() == ')':
-            count += 1
-        elif  stack.peek() == '(':
-            count -= 1
-        stack.pop()
-    if count == 0:
-        return True
-    else:
-        return False
+# def balance(my_str: str) -> bool:
+#     stack = Stack()
+#     count = 0
+#     for i in range(len(my_str)):
+#         stack.push(my_str[i])
+#     for i in range(len(stack.stack)):
+#         if  stack.peek() == ')':
+#             count += 1
+#         elif  stack.peek() == '(':
+#             count -= 1
+#         stack.pop()
+#     if count == 0:
+#         return True
+#     else:
+#         return False
 
-my_str = '(())'
-print(balance(my_str))
+# my_str = '(())'
+# print(balance(my_str))
