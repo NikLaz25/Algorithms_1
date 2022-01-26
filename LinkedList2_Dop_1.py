@@ -62,53 +62,33 @@ class LinkedList2:
         self.head.next = self.tail
         self.tail.prev = self.head
 
-    def len(self): #скорректировано для допзадания
+    def len(self):  # скорректировано для допзадания
         '''Длина списка, метод скорректирован для фиктивных узлов'''
         node = self.head
         counter = 0
         while node is not None:
-            if node.value is None:
-                pass
-            else:
+            if node.value is not None:
                 counter += 1
             node = node.next
 
         return counter
 
-    def delete(self, val, all=False):
+    def delete(self, val, all = False):
         '''Удалить значение, метод скорректирован для фиктивных узлов'''
         last_node = None
         node = self.head
         next_node = node.next
 
-        if all is False:  # Если удаляем только один-первый найденный узел
-            while node is not None:
-                if node.value == val:  # Удаляем число в середине
-                    last_node.next = node.next
-                    next_node.prev = node.prev
+        while node is not None and node.next is not None:
+            if node.value == val:  # Удаляем число в середине
+                last_node.next = node.next
+                next_node.prev = node.prev
+                if all is False:  # Если удаляем только один-первый найденный узел
                     return
+            else:
                 last_node = node
-                node = node.next
-                try:
-                    next_node = node.next
-                except:
-                    pass
-            return
-
-        else:
-            while node is not None:
-                if node.value == val:  # Удаляем число в середине
-                    last_node.next = node.next
-                    next_node.prev = node.prev
-                else:  # если ничего не удалили, тогда левая граница - last_node двиг вправо
-                    last_node = node
-
-                node = node.next
-                try:
-                    next_node = node.next
-                except:
-                    pass
-            return
+            node = node.next
+            next_node = node.next
 
     def add_in_head(self, newNode):
         '''Добавляем значение в начало списка, метод скорректирован для фиктивных узлов'''
@@ -135,3 +115,14 @@ class LinkedList2:
 
         elif afterNode is None:  # вставка когда afterNode is None
             self.add_in_tail(newNode)
+
+# s_list = LinkedList2()
+#
+# s_list.add_in_tail(Node(10))
+# s_list.add_in_tail(Node(20))
+# s_list.add_in_tail(Node(10))
+# s_list.add_in_tail(Node(20))
+# s_list.add_in_tail(Node(10))
+# s_list.add_in_tail(Node(20))
+# # s_list.print_all_nodes()
+# print(s_list.len())
