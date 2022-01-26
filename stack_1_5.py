@@ -19,13 +19,14 @@ class Stack:
         '''размер стека'''
         return len(self.stack)
 
-    def pop(self) -> Optional[list]:  # мера сложности О(n)
+    def pop(self) -> Union[int, str]: #мера сложности О(n)
         '''вернуть'''
-        if len(self.stack) > 0:  # мера сложности О(n)
+        if len(self.stack) > 0: #мера сложности О(n)
+            target = self.stack[0]
             self.stack = self.stack[1:]
-            return self.stack
+            return target
         else:
-            return None  # если стек пустой
+            return None # если стек пустой
 
     def push(self, value: Union[int, str, float]) -> Optional[list]:  # мера сложности О(n)
         '''вставить'''
@@ -41,6 +42,13 @@ class Stack:
         else:
             return None  # если стек пустой
 
+# stack = Stack()
+# stack.push('*')
+# stack.push(3)
+#
+# print(stack.pop())
+# print(stack.pop())
+# print(stack.pop())
 
 
 # def balance(my_str: str) -> bool:
@@ -58,6 +66,6 @@ class Stack:
 #         return True
 #     else:
 #         return False
-
+#
 # my_str = '(())'
 # print(balance(my_str))
