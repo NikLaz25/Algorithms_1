@@ -19,7 +19,7 @@ class Stack:
         '''размер стека'''
         return len(self.stack)
 
-    def pop(self) -> Union[int, str]: #мера сложности О(n)
+    def pop(self) -> Optional[Union[int, str]]: #мера сложности О(n)
         '''вернуть'''
         if len(self.stack) > 0: #мера сложности О(n)
             target = self.stack[0]
