@@ -18,7 +18,7 @@ class Stack:
         '''размер стека'''
         return len(self.stack)
 
-    def pop(self) -> Union[int, str]: #мера сложности О(n)
+    def pop(self) -> Optional[Union[int, str]]: #мера сложности О(n)
         '''вернуть'''
         if len(self.stack) > 0: #мера сложности О(n)
             target = self.stack[0]
@@ -41,20 +41,18 @@ class Stack:
         else:
             return None  # если стек пустой
 
-def postfix_calculation(my_stack_1, my_stack_2) -> int:
+def postfix_calculation(stack_1, stack_2) -> int:
     '''функция вычисления постфиксных выражений'''
+    while len(stack_1.stack) > 0:
+        item = stack_1.pop()
+        if isinstance(item, int):
+            stack_2.push(item)
+        elif item == '*':
+            stack_2.push(stack_2.pop() * stack_2.pop())
+        elif item == '+':
+            stack_2.push(stack_2.pop() + stack_2.pop())
+    return stack_2.peek()
 
-    while len(my_stack_1.stack) > 0: #основной цикл
-        if type(my_stack_1.peek()) is not str: #если верхушка число
-            my_stack_2.push(my_stack_1.peek())
-            my_stack_1.pop()
-        elif (my_stack_1.peek()) == '*':
-            my_stack_2.stack = [my_stack_2.stack[0] * my_stack_2.stack[1]]
-            my_stack_1.pop()
-        elif (my_stack_1.peek()) == '+':
-            my_stack_2.stack = [my_stack_2.stack[0] + my_stack_2.stack[1]]
-            my_stack_1.pop()
-    return my_stack_2.stack[0]
 # # формируем стек_1 = 1 2 + 3 *
 # my_stack_first = Stack()
 # my_stack_first.push('*')
