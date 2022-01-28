@@ -64,9 +64,9 @@ class LinkedList2:
 
     def len(self):  # скорректировано для допзадания
         '''Длина списка, метод скорректирован для фиктивных узлов'''
-        node = self.head
+        node = self.head.next
         counter = 0
-        while node is not None:
+        while node is not None and node is not self.tail:
             if node.value is not None:
                 counter += 1
             node = node.next
@@ -116,13 +116,61 @@ class LinkedList2:
         elif afterNode is None:  # вставка когда afterNode is None
             self.add_in_tail(newNode)
 
+    def LinkedList_in_List(self):
+        '''Вспомогательный метод для тестирования.
+        Выводит значения связанного списка в обычный список'''
+        node = self.head
+        my_list = []
+        while node is not None:
+            if node.value is not None:
+                my_list += [node.value]
+            node = node.next
+        return my_list
+
+    def find(self, val):
+        '''Поиск значения в списке'''
+        node = self.head
+        while node is not None:
+            if node.value == val:
+                return node
+            node = node.next
+        return None
+
 # s_list = LinkedList2()
 #
 # s_list.add_in_tail(Node(10))
 # s_list.add_in_tail(Node(20))
 # s_list.add_in_tail(Node(10))
-# s_list.add_in_tail(Node(20))
+# nf = s_list.find(20)
+# print(nf.value)
+
+# s_list = LinkedList2()
+#
 # s_list.add_in_tail(Node(10))
 # s_list.add_in_tail(Node(20))
+# s_list.add_in_tail(Node(10))
+# # s_list.add_in_tail(Node(20))
+# # s_list.add_in_tail(Node(10))
+# # s_list.add_in_tail(Node(20))
 # # s_list.print_all_nodes()
 # print(s_list.len())
+# print(s_list.LinkedList_in_List())
+
+# s_list = LinkedList2()
+#
+# s_list.add_in_tail(Node(10))
+# s_list.add_in_tail(Node(20))
+# s_list.add_in_tail(Node(10))
+#
+# s_list.delete(10, False)
+# s_list.print_all_nodes()
+# print(s_list.LinkedList_in_List())
+#
+#
+# s_list.add_in_tail(Node(10))
+# s_list.add_in_tail(Node(10))
+# s_list.print_all_nodes()
+#
+# s_list.delete(10, True)
+# print(s_list.LinkedList_in_List())
+# s_list.print_all_nodes()
