@@ -41,25 +41,45 @@ class Stack:
         else:
             return None  # если стек пустой
 
-def postfix_calculation(stack_1, stack_2) -> int:
+def postfix_calculation(stack_1, stack_2) -> Union[int, float]:
     '''функция вычисления постфиксных выражений'''
     while len(stack_1.stack) > 0:
+#         print('stack_2: ', stack_2.stack)
         item = stack_1.pop()
-        if isinstance(item, int):
+        if type(item) is int:
             stack_2.push(item)
         elif item == '*':
             stack_2.push(stack_2.pop() * stack_2.pop())
         elif item == '+':
             stack_2.push(stack_2.pop() + stack_2.pop())
+        elif item == '-':
+            item_2 = stack_2.pop()
+            item_1 = stack_2.pop()
+            stack_2.push(item_1 - item_2)
+#             print('- вычисление: ',stack_2.peek())
+
+        elif item == '/':
+            item_2 = stack_2.pop()
+            item_1 = stack_2.pop()
+            try:
+                stack_2.push(item_1 / item_2)
+            except:
+#                 print('Деление на ноль')
+                pass
     return stack_2.peek()
 
-# # формируем стек_1 = 1 2 + 3 *
-# my_stack_first = Stack()
-# my_stack_first.push('*')
-# my_stack_first.push(3)
-# my_stack_first.push('+')
-# my_stack_first.push(2)
-# my_stack_first.push(1)
+
+# # задание 6 деление
+# # формируем стек_1 = 1 2 - 3 /
+# stack_1 = Stack()
+# stack_1.push('/')
+# stack_1.push(3)
+# stack_1.push('-')
+# stack_1.push(2)
+# stack_1.push(1)
+# # print(stack_1.stack)
+#
 # # формируем пустой стек_2
-# my_stack_last = Stack()
-# print(postfix_calculation(my_stack_first, my_stack_last))
+# stack_2 = Stack()
+# stack_2.stack
+# print(postfix_calculation(stack_1, stack_2))
