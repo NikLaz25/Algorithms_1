@@ -36,10 +36,14 @@ class Queue:
         self.tail = item
         # return
 
-    def dequeue(self) -> Optional[int]:  # мера сложности О(1)
+    def dequeue(self) -> Optional[int]: # мера сложности О(1)
         '''выдача из головы'''
-        if self.head is None:
-            return None  # если очередь пустая
+        if self.head is None: # если очередь пустая
+            return None
+        if self.head == self.tail: # когда элемент один в очереди
+            target = self.head
+            self.head = None
+            return target.value
         target = self.head
         self.head = self.head.next
         self.head.prev = None
