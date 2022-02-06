@@ -42,30 +42,30 @@ class Stack:
         else:
             return None  # если стек пустой
 
-# stack = Stack()
-# stack.push('*')
-# stack.push(3)
-#
-# print(stack.pop())
-# print(stack.pop())
-# print(stack.pop())
+stack = Stack()
+stack.push('*')
+stack.push(3)
+
+print(stack.pop())
+print(stack.pop())
+print(stack.pop())
 
 
-# def balance(my_str: str) -> bool:
-#     stack = Stack()
-#     count = 0
-#     for i in range(len(my_str)):
-#         stack.push(my_str[i])
-#     for i in range(len(stack.stack)):
-#         if  stack.peek() == ')':
-#             count += 1
-#         elif  stack.peek() == '(':
-#             count -= 1
-#         stack.pop()
-#     if count == 0:
-#         return True
-#     else:
-#         return False
-#
-# my_str = '(())'
-# print(balance(my_str))
+def balance(my_str: str) -> bool:
+    stack = Stack()
+    count = 0
+    for i in range(len(my_str)):
+        stack.push(my_str[i])
+    for i in range(len(stack.stack)):
+        if  stack.peek() == ')':
+            count += 1
+        elif  stack.peek() == '(':
+            count -= 1
+        stack.pop()
+    if count == 0:
+        return True
+    else:
+        return False
+
+my_str = '(())'
+print(balance(my_str))
