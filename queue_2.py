@@ -3,6 +3,8 @@
 '''
 
 class Deque:
+    '''Двойная очередь на основе стандартного списка'''
+
     def __init__(self):
         '''инициализация внутреннего хранилища'''
         self.my_list = []
@@ -38,8 +40,8 @@ class Deque:
         return len(self.my_list)  # размер очереди
 
     def print_list(self):
+        '''Печать списка'''
         return self.my_list
-
 
 def check_polinom(polinom):
     '''функция, которая с помощью deque проверяет,
