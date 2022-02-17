@@ -41,30 +41,27 @@ class OrderedList:
 
         '''вставка в середину'''
         if new_node.value >= self.head.value and self.__ascending is True:
-
             while self.compare(new_node.value, node.value) == 1 or self.compare(new_node.value, node.value) == 0 and node is not None:
                 node = node.next
-
             node = node.prev
             new_node.next = node.next
             new_node.prev = node     
             node.next.prev = new_node
             node.next = new_node
-            return
-        
+            return       
         '''вставка в начало'''
         if new_node.value <= self.head.value and self.__ascending is True:
             new_node.next = self.head
+            self.head.prev = new_node
             self.head = new_node
             return
-        
-        
+       
         '''если asc == False'''
-
-        
+    
         '''вставка в начало'''
         if new_node.value >= self.head.value and self.__ascending is False:
             new_node.next = self.head
+            self.head.prev = new_node
             self.head = new_node
             return
         
@@ -73,21 +70,16 @@ class OrderedList:
             new_node.prev = self.tail
             self.tail.next = new_node
             self.tail = new_node
-
             return
-        '''вставка в середину'''
-        if new_node.value >= self.tail.value and self.__ascending is False:
-
-            while self.compare(new_node.value, node.value) == 1 or self.compare(new_node.value, node.value) == 0 and node is not None:
-                node = node.prev
-            node = node.next
-            
-            new_node.next = node.next
-            new_node.prev = node
         
-            node.next.prev = new_node
-            node.next = new_node
-
+        '''вставка в середину'''
+        if new_node.value <= self.head.value and self.__ascending is False:
+            while self.compare(new_node.value, node.value) == -1 or self.compare(new_node.value, node.value) == 0 and node is not None:
+                node = node.next
+            new_node.next = node
+            new_node.prev = node.prev
+            node.prev.next = new_node     
+            node.prev = new_node
             return
       
 
@@ -114,8 +106,8 @@ class OrderedList:
             self.tail.next = None
             return
         # если нашли в середине
-        while node is not None and node.value <= val: # обновлено по сравнению с обычным связанным списком
-            if node.value == val and node is not self.tail and node is not self.head:
+        while node is not None:
+            if node.value == val:
                 left_node = node.prev
                 right_node = node.next
                 left_node.next = right_node
@@ -127,7 +119,6 @@ class OrderedList:
         self.__ascending = asc
         self.head = None
         self.tail = None
-
 
     def len(self):
         '''Длина связанного списка'''
@@ -156,11 +147,12 @@ class OrderedList:
             my_list += [node.value]
             node = node.next
         return my_list
-    
+
     def print_all_nodes(self):
         '''Печать значений всех узлов'''
         node = self.head
         while node is not None:
+            print(node.value)
             node = node.next
         return
     
@@ -180,5 +172,5 @@ class OrderedStringList(OrderedList):
             v2 = v2[:-1]
         len_v1 = len(v1)
         len_v2 = len(v2)
-        result = super().compare(len_v1.len_v2)
+        result = super().compare(len_v1, len_v2)
         return result
