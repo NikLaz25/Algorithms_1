@@ -1,17 +1,27 @@
+'''
+Работа с упорядоченным списком
+'''
+
+
 class Node:
+    '''Класс Node определяет узел'''
     def __init__(self, v):
+        '''конструктор'''
         self.value = v
         self.prev = None
         self.next = None
 
 
 class OrderedList:
+    '''Класс упорядоченного списка'''
     def __init__(self, asc):
+        '''конструктор'''
         self.head = None
         self.tail = None
         self.__ascending = asc
 
     def compare(self, v1, v2):
+        '''метод сравнения значений'''
         if v1 < v2:  # -1 если v1 < v2
             return -1
         elif v1 == v2:  # 0 если v1 == v2
@@ -84,8 +94,8 @@ class OrderedList:
             node.prev = new_node
             return
 
-    def find(self,
-             val):  # сложность в целом не поменялась О(n) но есть вероятность более раннего прерывания цикла при node.value > val
+    def find(self,val):  # сложность в целом не поменялась О(n)
+        # но есть вероятность более раннего прерывания цикла при node.value > val
         '''Поиск значения в списке'''
         node = self.head
         while node is not None and node.value <= val:  # обновлено по сравнению с обычным связанным списком
@@ -122,6 +132,7 @@ class OrderedList:
             node = node.next
 
     def clean(self, asc):
+        '''метод очистка списка'''
         self.__ascending = asc
         self.head = None
         self.tail = None
@@ -137,6 +148,7 @@ class OrderedList:
         return counter
 
     def get_all(self):
+        '''метод получения списка узлов'''
         r = []
         node = self.head
         while node != None:
@@ -164,7 +176,9 @@ class OrderedList:
 
 
 class OrderedStringList(OrderedList):
+    '''Дочерний класс упорядоченного списка для работы со строками'''
     def __init__(self, asc):
+        '''конструктор'''
         super(OrderedStringList, self).__init__(asc)
 
     def compare(self, v1, v2):
