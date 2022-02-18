@@ -51,8 +51,8 @@ class OrderedList:
 
         '''вставка в середину'''
         if new_node.value >= self.head.value and self.__ascending is True:
-            while self.compare(new_node.value, node.value) == 1 or self.compare(new_node.value,
-                                                                                node.value) == 0 and node is not None:
+            while self.compare(new_node.value, node.value) == 1 \
+                    or self.compare(new_node.value, node.value) == 0 and node is not None:
                 node = node.next
             node = node.prev
             new_node.next = node.next
