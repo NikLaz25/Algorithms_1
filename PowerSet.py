@@ -1,30 +1,27 @@
 '''
 Множества
 '''
+
+
 class HashTable:
     '''Родительский класс Хэш-таблиц'''
-    def __init__(self, sz, stp):
-        '''Конструктор'''
-        self.size = sz
-        self.step = stp
-        self.slots = [None] * self.size
 
 
-    def hash_fun(self, value): # в качестве value поступают строки!
+    def hash_fun(self, value):  # в качестве value поступают строки!
         '''по входному значению вычисляет индекс слота'''
         len_value = len(value)
         len_slots = len(self.slots)
         if len_value > len_slots:
-            index = len_value - (len_value//len_slots) * len_slots -1
+            index = len_value - (len_value // len_slots) * len_slots - 1
         else:
             index = len_value - 1
-        return index # всегда возвращает корректный индекс слота
+        return index  # всегда возвращает корректный индекс слота
 
     def seek_slot(self, value):
         '''функцию поиска слота - по входному значению сперва рассчитывает индекс хэш-функцией,
         а затем отыскивает подходящий слот для него с учётом коллизий,
         или возвращает None, если это не удалось'''
-         # находит индекс пустого слота для значения, или None
+        # находит индекс пустого слота для значения, или None
         index = self.hash_fun(value)
         len_slots = len(self.slots)
         if self.slots[index] is None:
@@ -56,7 +53,7 @@ class HashTable:
     def find(self, value):
         '''проверяет, имеется ли в слотах указанное значение,
         и возвращает либо слот, либо None'''
-         # находит индекс слота со значением, или None
+        # находит индекс слота со значением, или None
         for index in range(len(self.slots)):
             if self.slots[index] == value:
                 return index
@@ -64,22 +61,25 @@ class HashTable:
 
 
 class PowerSet(HashTable):
-    '''Дочерний класс PowerSet наследует методы класса HashTable'''
+    '''Дочерний класс PowerSet наследует методы класса HashTable
+    реализация хранилища'''
 
-    def __init__(self, sz, stp):
+    def __init__(self):
         '''Конструктор'''
-        super().__init__(sz, stp)
-
-    #         HashTable(3, 17)
-
-    #         self.my_set = []
-    # ваша реализация хранилища
+        self.size_set = 19
+        self.step = 3
+        self.slots = [None] * self.size_set
 
     def size(self):
         '''количество элементов в множестве'''
-        #         print('количество элементов в множестве')
-        result = len(self.slots)
-        return result
+        count = 0
+        for element in self.slots:
+            if element is not None:
+                count += 1
+        return count
+
+    def one(self):
+        print('123')
 
     def put(self, value):
         '''помещает значение value в слот, вычисляемый с помощью функции поиска'''

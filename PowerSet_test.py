@@ -1,12 +1,12 @@
 import unittest
-from PowerSet_Множества import HashTable, PowerSet
+from PowerSet import HashTable, PowerSet
 
 class MyTestCase(unittest.TestCase):
     def test_atributs(self):
         '''тестируем получение атрибутов родительского класса'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         result = exemplar.slots
         answer = [None, None, None, None, None, None, None, None, None, None,\
                   None, None, None, None, None, None, None, None, None]
@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем put'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         result = exemplar.slots
@@ -39,7 +39,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем remove'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -67,7 +67,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем intersection'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -93,7 +93,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем union'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -127,7 +127,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем difference'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -153,7 +153,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем issubset'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -184,7 +184,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем get'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -210,7 +210,7 @@ class MyTestCase(unittest.TestCase):
         '''тестируем size'''
         size = 19
         step = 3
-        exemplar = PowerSet(size, step)
+        exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
         val = '26'
@@ -223,7 +223,7 @@ class MyTestCase(unittest.TestCase):
         exemplar.put(val)
 
         result = exemplar.size
-        answer = 19
+        answer = 5
         self.assertEqual(result, answer)
 
 
