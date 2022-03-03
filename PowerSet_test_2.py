@@ -84,6 +84,11 @@ class MyTestCase(unittest.TestCase):
         answer = []
         self.assertEqual(result, answer)
 
+        set2 = ['25', '25', '27', '125', '1234', None, '123']
+        result = exemplar.intersection(set2)
+        answer = ['25', '125', '1234', '27']
+        self.assertEqual(result, answer)
+
     def test_union(self):
         '''тестируем union'''
         # size = 19

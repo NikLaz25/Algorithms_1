@@ -58,10 +58,9 @@ class PowerSet(HashTable):
     def intersection(self, set2):
         '''пересечение текущего множества и set2'''
         inter_set = []
-        for value in set2:
-            index = self.find(value)
-            if index is not None and value is not None:  # проверка наличия значения value
-                inter_set += [self.slots[index]]
+        unique_set = list(set(set2))
+
+        inter_set = [value for value in self.slots if value in unique_set]
 
         return inter_set
 
