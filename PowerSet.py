@@ -61,7 +61,7 @@ class PowerSet():
     def put(self, value):
         '''помещает значение value в слот, вычисляемый с помощью функции поиска'''
         if self.find(value) is None:  # проверка наличия подобных значений
-#             index = self.put_ht(value)
+
             index = self.seek_slot(value)
             if index is not None:
                 self.slots[index] = value
