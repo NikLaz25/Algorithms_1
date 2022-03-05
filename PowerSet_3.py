@@ -7,13 +7,11 @@ class PowerSet():
 
     def __init__(self):
         '''Конструктор'''
-#         self.slots = []
         self.slots = {}
 
     def find(self, value):
         '''проверяет, имеется ли в слотах указанное значение,
         и возвращает либо слот, либо None'''
-        # находит индекс слота со значением, или None
         find_val = self.slots.get(value)
         if find_val is not None:
             return find_val
@@ -82,7 +80,7 @@ class PowerSet():
         count = 0
         for value2 in set2:
             for value in self.slots:
-                if value2 == value and value != None:
+                if value2 == value and value is not None:
                     count += 1
         if count == len(set2):
             return True

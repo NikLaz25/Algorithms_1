@@ -1,89 +1,224 @@
-'''
-Множества
-'''
+import unittest
+from PowerSet_3 import PowerSet
 
-class PowerSet():
-    '''Класс PowerSet'''
+class MyTestCase(unittest.TestCase):
 
-    def __init__(self):
-        '''Конструктор'''
-#         self.slots = []
-        self.slots = {}
+    def test_put(self):
+        '''тестируем put'''
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        result = exemplar.slots
+        answer = {'25': '25'}
+        self.assertEqual(result, answer)
 
-    def find(self, value):
-        '''проверяет, имеется ли в слотах указанное значение,
-        и возвращает либо слот, либо None'''
-        # находит индекс слота со значением, или None
-        find_val = self.slots.get(value)
-        if find_val is not None:
-            return find_val
+        val = '25'
+        exemplar.put(val)
+        self.assertEqual(result, answer)
 
-    def size(self):
-        '''количество элементов в множестве'''
-        return len(self.slots)
+        val = '26'
+        exemplar.put(val)
+        result = exemplar.slots
+        answer = {'25': '25', '26': '26'}
+        self.assertEqual(result, answer)
 
-    def put(self, value):
-        '''помещает значение value в слот'''
-        self.slots[value] = value
+    def test_remove(self):
+        '''тестируем remove'''
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
 
-    def get(self, value):
-        '''возвращает True если value имеется в множестве, иначе False'''
-        for slot_value in self.slots:
-            if slot_value == value:
-                return True
-        return False
+        val = '26' # когда есть такой элемент
+        exemplar.remove(val)
+        result = exemplar.slots
+        answer = {'25': '25'}
+        self.assertEqual(result, answer)
 
-    def remove(self, value):
-        '''возвращает True если value удалено иначе False'''
-        index = self.find(value)
-        if index is not None:  # проверка наличия подобных значений
-            self.slots.pop(index)
-            return True
-        return False
+        val = '27' # когда нет такого элемента
+        exemplar.remove(val)
+        self.assertEqual(result, answer)
 
-    def intersection(self, set2):
-        '''пересечение текущего множества и set2'''
-        inter_set = []
-        unique_set = list(set(set2))
+        val = '25' # когда элемент последний
+        exemplar.remove(val)
+        result = exemplar.slots
+        answer = {}
+        self.assertEqual(result, answer)
 
-        inter_set = [value for value in self.slots if value in unique_set]
+    def test_intersection(self):
+        '''тестируем intersection при большом кол-ве элементов'''
+        exemplar = PowerSet()
+        for value in range(20000):
+            exemplar.put(str(value))
+        set2 = []
+        for x in range(19990, 20000):
+            set2 += [str(x)]
+        result = exemplar.intersection(set2)
+        answer = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        self.assertEqual(result, answer)
 
-        return inter_set
 
-    def union(self, set2):
-        '''объединение текущего множества и set2'''
-        union_set = []
-        for value in self.slots:
-            if value is not None:
-                union_set += [value]
+    def test_intersection(self):
+        '''тестируем intersection'''
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
 
-        for value in set2:
-            index = self.find(value)
-            if index is None and value is not None:  # проверка наличия значения value
-                union_set += [value]
-        return union_set
+        set2 = ['25', '125', None]
+        result = exemplar.intersection(set2)
+        answer = ['25', '125']
+        self.assertEqual(result, answer)
 
-    def difference(self, set2):
-        '''разница текущего множества и set2, то что не входит в set2'''
-        dif_set = []
-        for value in self.slots:
-            if value is not None:
-                count = 0
-                for value2 in set2:
-                    if value == value2:
-                        count += 1
-                if count == 0:
-                    dif_set += [value]
-        return dif_set
+        set2 = ['251', '1251', None]
+        result = exemplar.intersection(set2)
+        answer = []
+        self.assertEqual(result, answer)
 
-    def issubset(self, set2):
-        '''возвращает True, если set2 есть подмножество
-        текущего множества, иначе False'''
-        count = 0
-        for value2 in set2:
-            for value in self.slots:
-                if value2 == value and value != None:
-                    count += 1
-        if count == len(set2):
-            return True
-        return False
+        set2 = ['25', '25', '27', '125', '1234', None, '123']
+        result = exemplar.intersection(set2)
+        answer = ['25', '125', '1234', '27']
+        self.assertEqual(result, answer)
+
+    def test_union(self):
+        '''тестируем union'''
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
+
+        set2 = ['25', '124', None]
+        result = exemplar.union(set2)
+        answer = ['25', '26', '125', '1234', '27', '124']
+        self.assertEqual(result, answer)
+
+        set2 = []
+        result = exemplar.union(set2)
+        answer = ['25', '26', '125', '1234', '27']
+        self.assertEqual(result, answer)
+
+        exemplar = PowerSet()
+        set2 = ['25', '124', None]
+        result = exemplar.union(set2)
+        answer = ['25', '124']
+        self.assertEqual(result, answer)
+
+    def test_difference(self):
+        '''тестируем difference'''
+
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
+
+        set2 = ['25', '125', None]
+        result = exemplar.difference(set2)
+        answer = ['26', '1234', '27']
+        self.assertEqual(result, answer)
+
+        set2 = ['25', '26', '125', '1234', '27']
+        result = exemplar.difference(set2)
+        answer = []
+        self.assertEqual(result, answer)
+
+    def test_issubset(self):
+        '''тестируем issubset'''
+
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
+
+        set2 = ['25', '27'] # все элементы параметра входят в текущее множество,
+        result = exemplar.issubset(set2)
+        answer = True
+        self.assertEqual(result, answer)
+
+        set2 = ['125', '271'] # не все элементы параметра входят в текущее множество)
+        result = exemplar.issubset(set2)
+        answer = False
+        self.assertEqual(result, answer)
+
+        set2 = ['25', '26', '125', '1234', '27', '28'] # все элементы текущего множества входят в параметр,
+        result = exemplar.issubset(set2)
+        answer = False
+        self.assertEqual(result, answer)
+
+    def test_get(self):
+        '''тестируем get'''
+        size = 19
+        step = 3
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
+
+        value = '27'
+        result = exemplar.get(value)
+        answer = True
+        self.assertEqual(result, answer)
+
+        value = '271'
+        result = exemplar.get(value)
+        answer = False
+        self.assertEqual(result, answer)
+
+    def test_size(self):
+        '''тестируем size'''
+
+        exemplar = PowerSet()
+        val = '25'
+        exemplar.put(val)
+        val = '26'
+        exemplar.put(val)
+        val = '125'
+        exemplar.put(val)
+        val = '1234'
+        exemplar.put(val)
+        val = '27'
+        exemplar.put(val)
+
+        result = exemplar.size()
+        answer = 5
+        self.assertEqual(result, answer)
+
+
+
+if __name__ == '__main__':
+    unittest.main()
