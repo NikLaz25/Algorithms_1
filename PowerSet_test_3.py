@@ -1,5 +1,5 @@
 import unittest
-from PowerSet import HashTable, PowerSet
+from PowerSet import PowerSet
 
 class MyTestCase(unittest.TestCase):
     def test_atributs(self):
@@ -57,8 +57,6 @@ class MyTestCase(unittest.TestCase):
 
     def test_intersection(self):
         '''тестируем intersection'''
-        size = 19
-        step = 3
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -88,8 +86,6 @@ class MyTestCase(unittest.TestCase):
 
     def test_union(self):
         '''тестируем union'''
-        # size = 19
-        # step = 3
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -122,8 +118,6 @@ class MyTestCase(unittest.TestCase):
 
     def test_difference(self):
         '''тестируем difference'''
-        size = 19
-        step = 3
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -138,7 +132,7 @@ class MyTestCase(unittest.TestCase):
 
         set2 = ['25', '125', None]
         result = exemplar.difference(set2)
-        answer = ['26', '1234', '27']
+        answer = ['1234', '26', '27']
         self.assertEqual(result, answer)
 
         set2 = ['25', '26', '125', '1234', '27']
@@ -148,8 +142,6 @@ class MyTestCase(unittest.TestCase):
 
     def test_issubset(self):
         '''тестируем issubset'''
-        size = 19
-        step = 3
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -179,8 +171,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_get(self):
         '''тестируем get'''
-        size = 19
-        step = 3
+
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -205,8 +196,6 @@ class MyTestCase(unittest.TestCase):
 
     def test_size(self):
         '''тестируем size'''
-        size = 19
-        step = 3
         exemplar = PowerSet()
         val = '25'
         exemplar.put(val)
@@ -221,6 +210,14 @@ class MyTestCase(unittest.TestCase):
 
         result = exemplar.size()
         answer = 5
+        self.assertEqual(result, answer)
+
+        exemplar = PowerSet()
+        for value in range(100):
+            exemplar.put(str(value))
+
+        result = exemplar.size()
+        answer = 100
         self.assertEqual(result, answer)
 
 
