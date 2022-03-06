@@ -2,6 +2,7 @@
 Множества
 '''
 
+
 class PowerSet():
     '''Класс PowerSet'''
 
@@ -25,10 +26,6 @@ class PowerSet():
         '''помещает значение value в слот'''
         self.slots[value] = value
 
-    def put2(self, value):
-        '''помещает значение value в слот'''
-        self.set2[value] = value
-
     def get(self, value):
         '''возвращает True если value имеется в множестве, иначе False'''
         for slot_value in self.slots:
@@ -50,7 +47,7 @@ class PowerSet():
 
         keys = self.slots
         for key in keys:
-            if self.set2.get(key) is not None:
+            if set2.get(key) is not None:
                 inter_set[key] = key
 
         return inter_set
@@ -58,7 +55,7 @@ class PowerSet():
     def union(self, set2):
         '''объединение текущего множества и set2'''
         union_set = {}
-        keys_set2 = self.set2.keys()
+        keys_set2 = set2.keys()
         for key in keys_set2:
             self.slots[key] = key
         return self.slots
@@ -67,7 +64,11 @@ class PowerSet():
         '''разница текущего множества и set2, то что не входит в set2'''
         diff_set = {}
         for el in self.slots:
-            if el in self.set2:
+            if el not in set2:
+                diff_set[el] = el
+
+        for el in set2:
+            if el not in self.slots:
                 diff_set[el] = el
 
         return diff_set
