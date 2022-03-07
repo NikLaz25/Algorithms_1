@@ -9,7 +9,6 @@ class PowerSet():
     def __init__(self):
         '''Конструктор'''
         self.slots = {}
-        self.set2 = {}
 
     def find(self, value):
         '''проверяет, имеется ли в слотах указанное значение,
@@ -46,26 +45,27 @@ class PowerSet():
         inter_set = PowerSet()
         keys = self.slots
         for key in keys:
-            if set2.get(key) is not None:
+            if set2.get(key) is True:
                 inter_set.put(key)
         return inter_set
 
     def union(self, set2):
         '''объединение текущего множества и set2'''
         union_set = PowerSet()
-        keys_set2 = set2.keys()
-        for key in keys_set2:
-            union_set.put(key)
+        for el in self.slots:
+            union_set.put(el)
+        for el in set2.slots:
+            union_set.put(el)
         return union_set
 
     def difference(self, set2):
         '''разница текущего множества и set2, то что не входит в set2'''
         diff_set = PowerSet()
         for el in self.slots:
-            if el not in set2:
+            if el not in set2.slots:
                 diff_set.put(el)
 
-        for el in set2:
+        for el in set2.slots:
             if el not in self.slots:
                 diff_set.put(el)
 
@@ -75,10 +75,10 @@ class PowerSet():
         '''возвращает True, если set2 есть подмножество
         текущего множества, иначе False'''
         count = 0
-        for value2 in set2:
-            for value in self.slots:
-                if value2 == value and value is not None:
-                    count += 1
-        if count == len(set2):
+        for value2 in set2.slots:
+            if value2 in self.slots:
+                count += 1
+        if count == len(set2.slots):
             return True
         return False
+
