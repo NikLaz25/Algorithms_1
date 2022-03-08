@@ -115,7 +115,7 @@ class MyTestCase(unittest.TestCase):
             exemplar2.put(str(value))
 
         result = exemplar.difference(exemplar2).slots
-        answer = {'2': '2', '3': '3', '4': '4', '10': '10', '11': '11', '12': '12', '13': '13', '14': '14'}
+        answer = {'2': '2', '3': '3', '4': '4'}
         self.assertEqual(result, answer)
 
 

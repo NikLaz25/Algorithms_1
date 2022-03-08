@@ -65,10 +65,6 @@ class PowerSet():
             if el not in set2.slots:
                 diff_set.put(el)
 
-        for el in set2.slots:
-            if el not in self.slots:
-                diff_set.put(el)
-
         return diff_set
 
     def issubset(self, set2):
