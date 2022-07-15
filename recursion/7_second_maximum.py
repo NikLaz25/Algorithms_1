@@ -13,4 +13,4 @@ def second_maximum(work_list, first_max=0, second_max=0):
     return second_max
 
 work_list = [1, 2, 4, 5, 5, 3, 2, 1, 2, 3, 5, 7, 8, 8, 8]
-print(second_maximum(work_list, max(work_list), min(work_list)))
+print(second_maximum(work_list))
