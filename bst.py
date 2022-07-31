@@ -119,30 +119,4 @@ class BST:
     def Count(self):
         return self.counter(self.Root, 0) # количество узлов в дереве
     
-    def print_tree_key(self, node):
-        print('Узел')
-        print('NodeKey', node.NodeKey)
-        if node.Parent is not None:
-            print('Parent_key', node.Parent.NodeKey)
-        else:
-            print('Parent', node.Parent)
-        if node.LeftChild is not None:
-            print('LeftChild_Key', node.LeftChild.NodeKey)
-        else:
-            print('LeftChild', node.LeftChild)
-        if node.RightChild is not None:
-            print('RightChild_Key', node.RightChild.NodeKey)
-        else:
-            print('RightChild', node.RightChild)
-        print('')
-        if node.LeftChild is not None:
-            self.print_tree_key(node.LeftChild)
-        if node.RightChild is not None:
-            self.print_tree_key(node.RightChild)
-    def ezy_print_tree_key(self, node):
-        print(node.NodeKey)
 
-        if node.LeftChild is not None:
-            self.ezy_print_tree_key(node.LeftChild)
-        if node.RightChild is not None:
-            self.ezy_print_tree_key(node.RightChild)
