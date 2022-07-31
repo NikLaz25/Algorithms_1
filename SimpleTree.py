@@ -1,148 +1,79 @@
-class BSTNode:
-
-    def __init__(self, key, val, parent):
-        self.NodeKey = key # ключ узла
+class SimpleTreeNode:
+    def __init__(self, val, parent):
         self.NodeValue = val # значение в узле
         self.Parent = parent # родитель или None для корня
-        self.LeftChild = None # левый потомок
-        self.RightChild = None # правый потомок
+        self.Children = [] # список дочерних узлов
 
+class SimpleTree:
 
-class BSTFind: # промежуточный результат поиска
+    def __init__(self, root):
+        self.Root = root # корень, может быть None
 
-    def __init__(self):
-        self.Node = None # None если 
-        # в дереве вообще нету узлов
-
-        self.NodeHasKey = False # True если узел найден
-        self.ToLeft = False # True, если родительскому узлу надо добавить новый узел левым потомком
-
-
-class BST:
-
-    def __init__(self, node):
-        self.Root = node # корень дерева, или None
-
-        
-    def FindByKey_node(self, key, node):
-        if key == node.NodeKey:
-            return [node, True, False]
-        if node.LeftChild is not None and key < node.NodeKey:
-            return self.FindByKey_node(key, node.LeftChild)
-
-        elif node.RightChild is not None and key > node.NodeKey:
-            return self.FindByKey_node(key, node.RightChild)
-        
-        elif node.LeftChild is None and key < node.NodeKey:
-            return [node, False, True]
-        elif node.RightChild is None and key > node.NodeKey:
-            return [node, False, False]
-
-
-    def FindNodeByKey(self, key):
-        # ищем в дереве узел и сопутствующую информацию по ключу
-        # return None # возвращает BSTFind
-        
-        find_node = self.FindByKey_node(key, self.Root)
-        BSTF_ekz = BSTFind()
-        
-        BSTF_ekz.Node = find_node[0]
-        BSTF_ekz.NodeHasKey = find_node[1]
-        BSTF_ekz.ToLeft = find_node[2]
-
-        find_node_list = []
-        find_node_list.append(BSTF_ekz.Node)
-        find_node_list.append(BSTF_ekz.NodeHasKey)
-        find_node_list.append(BSTF_ekz.ToLeft)
-        return find_node_list
-
-    def init_new_node(self, new_key, new_val, new_parent, ToLeft):
-        new_node = BSTNode(new_key, new_val, new_parent)
-        if ToLeft == True:
-            new_parent.LeftChild = new_node
+    def AddChild(self, ParentNode, NewChild):
+        '''добавление нового дочернего узла существующему ParentNode'''
+        if self.Root is None:
+            self.Root = NewChild
         else:
-            new_parent.RightChild = new_node
-        
+            node = NewChild
+            node.Parent = ParentNode
+            ParentNode.Children.append(NewChild)
+            
+    def DeleteNode(self, NodeToDelete):
+        '''удаление существующего узла NodeToDelete'''
+        NodeToDelete.Parent.Children.remove(NodeToDelete)
+        NodeToDelete.Parent = None
+
+    def GetAllNodes(self):
+        '''выдача всех узлов дерева в определённом порядке'''
+        node = self.Root
+        get_all_nodes_list = self.GetAllNodes_recurtion(node)
+        return get_all_nodes_list
     
-    def AddKeyValue(self, key, val):
-        # добавляем ключ-значение в дерево
-        find_node_list = self.FindNodeByKey(key)
-        if find_node_list[1] == False:
-            self.init_new_node(key, val, find_node_list[0], find_node_list[2])
-            
-        if find_node_list[1] == True:         
-            return False # если ключ уже есть
-  
-    def FinMinMax(self, FromNode, FindMax):
-        # ищем максимальный/минимальный ключ в поддереве
-        # возвращается объект типа BSTNode
-        if FindMax is True and FromNode.RightChild is not None:
-            return self.FinMinMax(FromNode.RightChild, FindMax)
-        elif FindMax is True and FromNode.RightChild is None:
-            return FromNode
-
-        elif FindMax == False and FromNode.LeftChild is not None:
-            return self.FinMinMax(FromNode.LeftChild, FindMax)
-        elif FindMax == False and FromNode.LeftChild is None:
-            return FromNode
-
-    def DeleteNodeByKey(self, key):
-        # удаляем узел по ключу
-        delet_node = self.FindNodeByKey(key)
-        if delet_node[1] == True:
-            delet_node = delet_node[0]
-
-            if delet_node.RightChild is not None:
-                new_node = self.FinMinMax(delet_node.RightChild, False)          
-            
-            if delet_node.Parent is None:
-                self.Root = new_node
-            elif delet_node.NodeKey < delet_node.Parent.NodeKey:
-                delet_node.Parent.LeftChild = new_node
-            elif delet_node.NodeKey > delet_node.Parent.NodeKey:
-                delet_node.Parent.RightChild = new_node
-                
-            new_node.LeftChild = delet_node.LeftChild
-            new_node.Parent = delet_node.Parent
-
-        else:
-            return False # если узел не найден
-
-    def counter(self, node, count_number):
-        count_number += 1
-        if node.LeftChild is not None:
-            count_number = self.counter(node.LeftChild, count_number)
-        if node.RightChild is not None:
-            count_number = self.counter(node.RightChild, count_number)
-        return count_number
-        
+    def GetAllNodes_recurtion(self, node):
+        '''выдача всех узлов дерева в определённом порядке'''
+        get_all_nodes_list = []
+        get_all_nodes_list.append(node)
+        if len(node.Children) > 0:
+            for i in node.Children:
+                get_all_nodes_list += self.GetAllNodes_recurtion(i)          
+        return get_all_nodes_list
+   
+    def FindNodesByValue(self, val):
+        '''поиск узлов по значению'''
+        node = self.Root
+        find_value_list = []
+        get_all_nodes_list = self.GetAllNodes_recurtion(node)
+        for i in get_all_nodes_list:
+            if i.NodeValue == val:
+                find_value_list.append(i)    
+        return find_value_list
+    
+    def MoveNode(self, OriginalNode, NewParent):
+        '''ваш код перемещения узла вместе с его поддеревом в качестве дочернего для узла NewParent'''
+        # У старого родителя список должет уменьшится
+        OriginalNode.Parent.Children.remove(OriginalNode)
+        # у нового родителя список должет пополнится
+        NewParent.Children.append(OriginalNode)
+        # у нода должен поменяться родитель
+        OriginalNode.Parent = NewParent
+      
     def Count(self):
-        return self.counter(self.Root, 0) # количество узлов в дереве
-    
-    def print_tree_key(self, node):
-        print('Узел')
-        print('NodeKey', node.NodeKey)
-        if node.Parent is not None:
-            print('Parent_key', node.Parent.NodeKey)
-        else:
-            print('Parent', node.Parent)
-        if node.LeftChild is not None:
-            print('LeftChild_Key', node.LeftChild.NodeKey)
-        else:
-            print('LeftChild', node.LeftChild)
-        if node.RightChild is not None:
-            print('RightChild_Key', node.RightChild.NodeKey)
-        else:
-            print('RightChild', node.RightChild)
-        print('')
-        if node.LeftChild is not None:
-            self.print_tree_key(node.LeftChild)
-        if node.RightChild is not None:
-            self.print_tree_key(node.RightChild)
-    def ezy_print_tree_key(self, node):
-        print(node.NodeKey)
+        '''количество всех узлов в дереве'''
+        return len(self.GetAllNodes())
 
-        if node.LeftChild is not None:
-            self.ezy_print_tree_key(node.LeftChild)
-        if node.RightChild is not None:
-            self.ezy_print_tree_key(node.RightChild)
+    def LeafCount(self):
+        '''количество листьев в дереве'''
+        get_all_nodes = self.GetAllNodes()
+        quantity_of_leaves = 0
+        
+        for i in get_all_nodes:
+            if len(i.Children) == 0:
+                quantity_of_leaves += 1
+        return quantity_of_leaves
+    
+    def print_elements(self, node):
+        '''вспомогательный метод, печать всех значений узлов дерева'''
+        print(node.NodeValue)
+        if len(node.Children) > 0:
+            for i in node.Children:
+                self.print_elements(i)
