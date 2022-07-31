@@ -28,10 +28,10 @@ class BST:
         if key == node.NodeKey:
             return [node, True, False]
         if node.LeftChild is not None and key < node.NodeKey:
-            return FindByKey_node(key, node.LeftChild)
+            return self.FindByKey_node(key, node.LeftChild)
 
         elif node.RightChild is not None and key > node.NodeKey:
-            return FindByKey_node(key, node.LeftChild)
+            return self.FindByKey_node(key, node.RightChild)
         
         elif node.LeftChild is None and key < node.NodeKey:
             return [node, False, True]
@@ -68,7 +68,7 @@ class BST:
         # добавляем ключ-значение в дерево
         find_node_list = self.FindNodeByKey(key)
         if find_node_list[1] == False:
-            self.init_new_node(key, val, find_node_list[0], find_node_list[0])
+            self.init_new_node(key, val, find_node_list[0], find_node_list[2])
             
         if find_node_list[1] == True:         
             return False # если ключ уже есть
@@ -76,26 +76,38 @@ class BST:
     def FinMinMax(self, FromNode, FindMax):
         # ищем максимальный/минимальный ключ в поддереве
         # возвращается объект типа BSTNode
-        if FindMax == True and FromNode.RightChild is not None:
-            self.FinMinMax(FromNode.RightChild, FindMax)
-        elif FindMax == True and FromNode.RightChild is None:
+        if FindMax is True and FromNode.RightChild is not None:
+            return self.FinMinMax(FromNode.RightChild, FindMax)
+        elif FindMax is True and FromNode.RightChild is None:
             return FromNode
+
         elif FindMax == False and FromNode.LeftChild is not None:
-            self.FinMinMax(FromNode.LeftChild, FindMax)
+            return self.FinMinMax(FromNode.LeftChild, FindMax)
         elif FindMax == False and FromNode.LeftChild is None:
             return FromNode
 
-
     def DeleteNodeByKey(self, key):
         # удаляем узел по ключу
-        delet_node = FindNodeByKey(key)
+        delet_node = self.FindNodeByKey(key)
         if delet_node[1] == True:
             delet_node = delet_node[0]
-            new_node = delet_node.RightChild.LeftChild
-            delet_node.Parent.RightChild = new_node
+
+            if delet_node.RightChild is not None:
+                new_node = self.FinMinMax(delet_node.RightChild, False)          
+            
+            if delet_node.Parent is None:
+                self.Root = new_node
+            elif delet_node.NodeKey < delet_node.Parent.NodeKey:
+                delet_node.Parent.LeftChild = new_node
+            elif delet_node.NodeKey > delet_node.Parent.NodeKey:
+                delet_node.Parent.RightChild = new_node
+                
+            new_node.LeftChild = delet_node.LeftChild
+            new_node.Parent = delet_node.Parent
 
         else:
             return False # если узел не найден
+
     def counter(self, node, count_number):
         count_number += 1
         if node.LeftChild is not None:
@@ -106,3 +118,31 @@ class BST:
         
     def Count(self):
         return self.counter(self.Root, 0) # количество узлов в дереве
+    
+    def print_tree_key(self, node):
+        print('Узел')
+        print('NodeKey', node.NodeKey)
+        if node.Parent is not None:
+            print('Parent_key', node.Parent.NodeKey)
+        else:
+            print('Parent', node.Parent)
+        if node.LeftChild is not None:
+            print('LeftChild_Key', node.LeftChild.NodeKey)
+        else:
+            print('LeftChild', node.LeftChild)
+        if node.RightChild is not None:
+            print('RightChild_Key', node.RightChild.NodeKey)
+        else:
+            print('RightChild', node.RightChild)
+        print('')
+        if node.LeftChild is not None:
+            self.print_tree_key(node.LeftChild)
+        if node.RightChild is not None:
+            self.print_tree_key(node.RightChild)
+    def ezy_print_tree_key(self, node):
+        print(node.NodeKey)
+
+        if node.LeftChild is not None:
+            self.ezy_print_tree_key(node.LeftChild)
+        if node.RightChild is not None:
+            self.ezy_print_tree_key(node.RightChild)
