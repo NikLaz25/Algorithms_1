@@ -170,7 +170,7 @@ class BST:
                 delet_node.Parent.RightChild = new_node # есть отличие
 
                 
-            # ? если удаляем корень и есть оба потомка
+            # ?10  если удаляем корень и есть оба потомка
             elif delet_node.Parent is None\
                 and delet_node.RightChild is not None\
                 and delet_node.LeftChild is not None:
@@ -179,6 +179,14 @@ class BST:
                 new_node.LeftChild = delet_node.LeftChild
                 delet_node.LeftChild.Parent = new_node
                 self.Root = new_node
+
+            # 11 если удаляем левого потомка 
+            elif delet_node.Parent is self.Root and self.Root.LeftChild == delet_node:
+                self.Root.LeftChild = None
+
+            # 12 если удаляем правого  потомка
+            elif delet_node.Parent is self.Root and self.Root.RightChild == delet_node:
+                self.Root.RightChild = None
 
         else:
             return False # если узел не найден
@@ -196,4 +204,3 @@ class BST:
             return self.counter(self.Root, 0) # количество узлов в дереве
         except:
             return 0
-    
