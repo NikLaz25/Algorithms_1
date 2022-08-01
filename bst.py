@@ -192,5 +192,8 @@ class BST:
         return count_number
         
     def Count(self):
-        return self.counter(self.Root, 0) # количество узлов в дереве
+        try:
+            return self.counter(self.Root, 0) # количество узлов в дереве
+        except:
+            return 0
     
