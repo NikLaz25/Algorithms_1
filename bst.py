@@ -91,19 +91,94 @@ class BST:
         delet_node = self.FindNodeByKey(key)
         if delet_node[1] == True:
             delet_node = delet_node[0]
-
-            if delet_node.RightChild is not None:
-                new_node = self.FinMinMax(delet_node.RightChild, False)          
             
-            if delet_node.Parent is None:
-                self.Root = new_node
-            elif delet_node.NodeKey < delet_node.Parent.NodeKey:
-                delet_node.Parent.LeftChild = new_node
-            elif delet_node.NodeKey > delet_node.Parent.NodeKey:
-                delet_node.Parent.RightChild = new_node
+            # если удаляем правый подкорень и есть только правый потомок 
+            if delet_node.Parent is not None \
+                and delet_node.RightChild is not None \
+                and delet_node.LeftChild is None\
+                and delet_node.Parent.LeftChild is None: # правый подкорень
+                delet_node.Parent.RightChild = delet_node.RightChild
+                delet_node.RightChild.Parent = delet_node.Parent
+
+            # если удаляем левый подкорень и есть только правый потомок 
+            elif delet_node.Parent is not None \
+                and delet_node.RightChild is not None \
+                and delet_node.LeftChild is None\
+                and delet_node.Parent.RightChild is None: # левый подкорень
+                delet_node.Parent.LeftChild = delet_node.RightChild
+                delet_node.RightChild.Parent = delet_node.Parent
+
+            # если удаляем правый подкорень и есть только левый потомок
+            elif delet_node.Parent is not None\
+                and delet_node.RightChild is None \
+                and delet_node.LeftChild is not None\
+                and delet_node.Parent.LeftChild is None: # правый подкорень
+                delet_node.Parent.RightChild = delet_node.LeftChild
+                delet_node.LeftChild.Parent = delet_node.Parent
+
+            # если удаляем левый подкорень и есть только левый потомок
+            elif delet_node.Parent is not None\
+                and delet_node.RightChild is None\
+                and delet_node.LeftChild is not None\
+                and delet_node.Parent.RightChild is None: # левый подкорень
+                delet_node.Parent.LeftChild = delet_node.LeftChild
+                delet_node.LeftChild.Parent = delet_node.Parent
+
                 
-            new_node.LeftChild = delet_node.LeftChild
-            new_node.Parent = delet_node.Parent
+            # если удаляем единственный! корень и есть только правый потомок
+            elif delet_node.Parent is None\
+                and delet_node.RightChild is not None\
+                and delet_node.LeftChild is None:
+                self.Root = delet_node.RightChild
+                delet_node.RightChild.Parent = None
+
+            # если удаляем единственный!корень и есть только левый потомок
+            elif delet_node.Parent is None\
+                and delet_node.RightChild is None\
+                and delet_node.LeftChild is not None:
+                self.Root = delet_node.LeftChild
+                delet_node.LeftChild.Parent = None
+
+                
+            # если удаляем корень и нет потомков
+            elif delet_node.Parent is None \
+                and delet_node.RightChild is None \
+                and delet_node.LeftChild is None:
+                self.Root = None
+
+                
+            # ? если удаляем левый подкорень и есть оба потомка
+            elif delet_node.Parent is not None\
+                and delet_node.RightChild is not None\
+                and delet_node.LeftChild is not None\
+                and delet_node.NodeKey < delet_node.Parent.NodeKey: # левый подкорень
+                new_node = self.FinMinMax(delet_node.RightChild, False)
+                new_node.Parent = delet_node.Parent
+                new_node.LeftChild = delet_node.LeftChild
+                delet_node.LeftChild.Parent = new_node
+                delet_node.Parent.LeftChild = new_node
+
+            # ? если удаляем правый подкорень и есть оба потомка
+            elif delet_node.Parent is not None\
+                and delet_node.RightChild is not None\
+                and delet_node.LeftChild is not None\
+                and delet_node.NodeKey > delet_node.Parent.NodeKey: # правый подкорень
+                new_node = self.FinMinMax(delet_node.RightChild, False)
+                new_node.Parent = delet_node.Parent
+                new_node.LeftChild = delet_node.LeftChild
+                delet_node.LeftChild.Parent = new_node
+                delet_node.Parent.RightChild = new_node # есть отличие
+
+                
+            # ? если удаляем корень и есть оба потомка
+            elif delet_node.Parent is None\
+                and delet_node.RightChild is not None\
+                and delet_node.LeftChild is not None:
+                new_node = self.FinMinMax(delet_node.RightChild, False)
+                new_node.Parent = None
+                new_node.LeftChild = delet_node.LeftChild
+                delet_node.LeftChild.Parent = new_node
+                self.Root = new_node
 
         else:
             return False # если узел не найден
@@ -119,4 +194,3 @@ class BST:
     def Count(self):
         return self.counter(self.Root, 0) # количество узлов в дереве
     
-
